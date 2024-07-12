@@ -29,6 +29,10 @@ function App() {
         <div className="Card">
           <h2>Our Contract Address</h2>
           <p className="Hint">{contract_address?.slice(0, 30) + "..."}</p>
+          <h2>Recent sender Address</h2>
+          <p className="Hint">{recent_sender + "..."}</p>
+          <h2>Owner Address</h2>
+          <p className="Hint">{owner_address + "..."}</p>
           <h2>Our Contract Balance</h2>
           <p className="Hint">{owner_balance ?? "等等啊我找找..."}</p>
         </div>

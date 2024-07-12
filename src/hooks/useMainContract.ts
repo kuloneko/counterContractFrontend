@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { MainContract } from "../contracts/MainContract";
 import { useTonClient } from "./useTonClient";
 import { useAsyncInitialize } from "./useAsyncInitialize";
-import { Address, OpenedContract } from "ton-core";
+import { Address, Contract, OpenedContract } from "ton-core";
 import { toNano } from "ton-core";
 import { useTonConnect } from "./useTonConnect";
 
@@ -26,8 +26,8 @@ export function useMainContract() {
     const contract = new MainContract(
       Address.parse("EQDdUTwLg4Ow9IbRlnKRKPDnJfM8JIkZOXV4stcIUzHmIklV") // replace with your address from tutorial 2 step 8
     );
-    return client.open(contract) as OpenedContract<MainContract>;
-  }, [client]);
+    return client.open(contract as Contract) as OpenedContract<MainContract>;
+  }, [client]) as any;
 
   useEffect(() => {
     async function getValue() {
@@ -41,7 +41,7 @@ export function useMainContract() {
         owner_address: val.owner_address,
         owner_balance: balance.number,
       });
-      await sleep(5000); // sleep 5 seconds and poll value again
+      await sleep(10000); // sleep 5 seconds and poll value again
       getValue();
     }
     getValue();
