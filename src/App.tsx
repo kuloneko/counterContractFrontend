@@ -2,6 +2,9 @@ import "./App.css";
 import { TonConnectButton } from "@tonconnect/ui-react";
 import { useMainContract } from "./hooks/useMainContract";
 import { useTonConnect } from "./hooks/useTonConnect";
+import WebApp from '@twa-dev/sdk';
+import { fromNano } from "ton-core";
+
 
 function App() {
   const {
@@ -11,38 +14,81 @@ function App() {
     owner_address,
     owner_balance,
     sendIncrement,
+    sendDeposit,
+    sendWithdrawalRequest
   } = useMainContract();
 
   const { connected } = useTonConnect();
 
+  const showAlert = () => {
+    WebApp.showAlert("Hey there!");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
+    <div>
+      <div>
         <TonConnectButton />
-      </header>
-      <main className="App-main">
-        {connected && (
-          <button className="Increment-button" onClick={sendIncrement}>
-            Increment
-          </button>
-        )}
-        <div className="Card">
-          <h2>Our Contract Address</h2>
-          <p className="Hint">{contract_address?.slice(0, 30) + "..."}</p>
-          <h2>Recent sender Address</h2>
-          <p className="Hint">{recent_sender + "..."}</p>
-          <h2>Owner Address</h2>
-          <p className="Hint">{owner_address + "..."}</p>
-          <h2>Our Contract Balance</h2>
-          <p className="Hint">{owner_balance ?? "等等啊我找找..."}</p>
+      </div>
+      <div>
+        <div className='Card'>
+          <b>{WebApp.platform}</b>
+          <b>Our contract Address</b>
+          <div className='Hint'>{contract_address?.slice(0, 30) + "..."}</div>
+          <b>Our contract Balance</b>
+          {owner_balance && (
+            <div className='Hint'>{fromNano(owner_balance)}</div>
+          )}
         </div>
 
-        <div className="Card">
-          <h2>Counter Value</h2>
-          <p className="Hint">{counter_value ?? "不要催在找了..."}</p>
+        <div className='Card'>
+          <b>Counter Value</b>
+          <div>{counter_value ?? "Loading..."}</div>
         </div>
-      </main>
-      
+
+        <a
+          onClick={() => {
+            showAlert();
+          }}
+        >
+          Show Alert
+        </a>
+
+        <br />
+
+        {connected && (
+          <a
+            onClick={() => {
+              sendIncrement();
+            }}
+          >
+            Increment by 5
+          </a>
+        )}
+
+        <br />
+
+        {connected && (
+          <a
+            onClick={() => {
+              sendDeposit();
+            }}
+          >
+            Request deposit of 1 TON
+          </a>
+        )}
+
+        <br />
+
+        {connected && (
+          <a
+            onClick={() => {
+              sendWithdrawalRequest();
+            }}
+          >
+            Request 0.7 TON withdrawal
+          </a>
+        )}
+      </div>
     </div>
   );
 }
