@@ -10,12 +10,12 @@ function App() {
   const {
     contract_address,
     counter_value,
-    recent_sender,
-    owner_address,
+    // recent_sender,
+    // owner_address,
     owner_balance,
     sendIncrement,
-    sendDeposit,
-    sendWithdrawalRequest
+    // sendDeposit,
+    // sendWithdrawalRequest
   } = useMainContract();
 
   const { connected } = useTonConnect();
@@ -67,7 +67,7 @@ function App() {
 
         <br />
 
-        {connected && (
+        {/* {connected && (
           <a
             onClick={() => {
               sendDeposit();
@@ -75,11 +75,11 @@ function App() {
           >
             Request deposit of 1 TON
           </a>
-        )}
+        )} */}
 
         <br />
 
-        {connected && (
+        {/* {connected && (
           <a
             onClick={() => {
               sendWithdrawalRequest();
@@ -87,7 +87,7 @@ function App() {
           >
             Request 0.7 TON withdrawal
           </a>
-        )}
+        )} */}
       </div>
     </div>
   );
